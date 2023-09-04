@@ -289,6 +289,9 @@ export function render(
   container: Container,
   callback: ?Function,
 ) {
+  console.log(
+    'APP RENDERING, I am the render function in packages/react-dom/src/client/ReactDOMLegacy.js',
+  );
   invariant(
     isValidContainer(container),
     'Target container is not a DOM element.',
