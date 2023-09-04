@@ -23,6 +23,8 @@ const SUBSEPARATOR = ':';
 
 /**
  * Escape and wrap key so it is safe to use as a reactid
+ * 转义字符
+ * escape('hello:gornin=33') -> '$hello=2gornin=033'
  *
  * @param {string} key to be escaped.
  * @return {string} the escaped key.

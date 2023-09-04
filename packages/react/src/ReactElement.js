@@ -344,6 +344,9 @@ export function jsxDEV(type, config, maybeKey, source, self) {
 /**
  * Create and return a new ReactElement of the given type.
  * See https://reactjs.org/docs/react-api.html#createelement
+ *
+ * <h1>Hello React</h1>
+ * React.createElement('h1', null, 'Hello React')
  */
 export function createElement(type, config, children) {
   let propName;
@@ -371,6 +374,7 @@ export function createElement(type, config, children) {
     self = config.__self === undefined ? null : config.__self;
     source = config.__source === undefined ? null : config.__source;
     // Remaining properties are added to a new props object
+    // 将定义的props复制到内部props对象中，其中不包括key、ref、self、source属性
     for (propName in config) {
       if (
         hasOwnProperty.call(config, propName) &&

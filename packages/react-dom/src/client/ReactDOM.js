@@ -197,10 +197,10 @@ export {
   // Disabled behind disableLegacyReactDOMAPIs
   findDOMNode,
   hydrate,
-  render,
+  render, // ReactDOM.render()
   unmountComponentAtNode,
   // exposeConcurrentModeAPIs
-  createRoot,
+  createRoot, // 开启Concurrent模式
   createBlockingRoot,
   flushControlled as unstable_flushControlled,
   scheduleHydration as unstable_scheduleHydration,

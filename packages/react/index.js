@@ -48,7 +48,7 @@ export {
   useCallback,
   useContext,
   useEffect,
-  useImperativeHandle,
+  useImperativeHandle, // 极重要的，必要的；命令的，强制的；祈使的
   useDebugValue,
   useLayoutEffect,
   useMemo,
@@ -56,7 +56,7 @@ export {
   useRef,
   useState,
   useMutableSource,
-  useMutableSource as unstable_useMutableSource,
+  useMutableSource as unstable_useMutableSource, // 不稳定的
   createMutableSource,
   createMutableSource as unstable_createMutableSource,
   Fragment,
@@ -72,11 +72,11 @@ export {
   createFactory,
   useTransition,
   useTransition as unstable_useTransition,
-  startTransition,
+  startTransition, // 可以让你的UI在一次花费高的状态转变中始终保持响应性
   startTransition as unstable_startTransition,
-  useDeferredValue,
+  useDeferredValue, // 可以让你延迟屏幕上不那么重要的部分的更新
   useDeferredValue as unstable_useDeferredValue,
-  SuspenseList,
+  SuspenseList, // 可以让你控制loading状态指示器（比如转圈圈）的出现顺序
   SuspenseList as unstable_SuspenseList,
   block,
   block as unstable_block,

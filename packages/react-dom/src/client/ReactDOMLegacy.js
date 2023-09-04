@@ -172,6 +172,16 @@ function warnOnInvalidCallback(callback: mixed, callerName: string): void {
   }
 }
 
+/**
+ * render方法其实还是调这个函数的
+ *
+ * @param {*} parentComponent
+ * @param {*} children
+ * @param {*} container
+ * @param {*} forceHydrate
+ * @param {*} callback
+ * @returns
+ */
 function legacyRenderSubtreeIntoContainer(
   parentComponent: ?React$Component<any, any>,
   children: ReactNodeList,
@@ -284,13 +294,21 @@ export function hydrate(
   );
 }
 
+/**
+ * render 方法，老版本react经常用到，新用法为createRoot
+ * @param {*} element
+ * @param {*} container
+ * @param {*} callback
+ * @returns
+ */
 export function render(
   element: React$Element<any>,
   container: Container,
   callback: ?Function,
 ) {
   console.log(
-    'APP RENDERING, I am the render function in packages/react-dom/src/client/ReactDOMLegacy.js',
+    '%cAPP RENDERING, I am the render function in packages/react-dom/src/client/ReactDOMLegacy.js',
+    'color:gold;background-color:#000;font-size:20px;padding:8px;',
   );
   invariant(
     isValidContainer(container),
