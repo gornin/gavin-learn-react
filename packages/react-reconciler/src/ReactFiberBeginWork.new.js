@@ -237,6 +237,21 @@ export function reconcileChildren(
   nextChildren: any,
   renderLanes: Lanes,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:51:58
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'reconcileChildren'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberBeginWork.new.js/reconcileChildren',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   if (current === null) {
     // If this is a fresh new component that hasn't been rendered yet, we
     // won't update its child set by applying minimal side-effects. Instead,
@@ -1034,6 +1049,21 @@ function finishClassComponent(
 }
 
 function pushHostRootContext(workInProgress) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:43:57
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'pushHostRootContext'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberBeginWork.new.js/pushHostRootContext',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const root = (workInProgress.stateNode: FiberRoot);
   if (root.pendingContext) {
     pushTopLevelContextObject(
@@ -1049,6 +1079,21 @@ function pushHostRootContext(workInProgress) {
 }
 
 function updateHostRoot(current, workInProgress, renderLanes) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:43:15
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'updateHostRoot'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberBeginWork.new.js/updateHostRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   pushHostRootContext(workInProgress);
   const updateQueue = workInProgress.updateQueue;
   invariant(
@@ -1124,6 +1169,21 @@ function updateHostComponent(
   workInProgress: Fiber,
   renderLanes: Lanes,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:49:25
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'updateHostComponent'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberBeginWork.new.js/updateHostComponent',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   pushHostContext(workInProgress);
 
   if (current === null) {
@@ -1356,6 +1416,21 @@ function mountIndeterminateComponent(
   Component,
   renderLanes,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:48:21
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'mountIndeterminateComponent'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberBeginWork.new.js/mountIndeterminateComponent',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   if (_current !== null) {
     // An indeterminate component only mounts if it suspended inside a non-
     // concurrent tree, in an inconsistent state. We want to treat it like
@@ -3079,6 +3154,21 @@ function beginWork(
   workInProgress: Fiber,
   renderLanes: Lanes,
 ): Fiber | null {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:04:46
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'beginWork'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberBeginWork.new.js/beginWork',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const updateLanes = workInProgress.lanes;
 
   if (__DEV__) {

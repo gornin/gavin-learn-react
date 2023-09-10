@@ -149,10 +149,10 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
-    type: type,
-    key: key,
-    ref: ref,
-    props: props,
+    type: type, // class或function
+    key: key, // 
+    ref: ref, // 
+    props: props, // 
 
     // Record the component responsible for creating this element.
     _owner: owner,
@@ -344,6 +344,11 @@ export function jsxDEV(type, config, maybeKey, source, self) {
 /**
  * Create and return a new ReactElement of the given type.
  * See https://reactjs.org/docs/react-api.html#createelement
+ * 
+ * 处理config，把除了保留属性外的其他config赋值给props
+ * 把children处理后赋值给props.children
+ * 处理defaultProps
+ * 调用ReactElement返回一个jsx对象(virtual-dom)
  *
  * <h1>Hello React</h1>
  * React.createElement('h1', null, 'Hello React')
@@ -387,6 +392,7 @@ export function createElement(type, config, children) {
 
   // Children can be more than one argument, and those are transferred onto
   // the newly allocated props object.
+  // 把children处理后赋值给props.children
   const childrenLength = arguments.length - 2;
   if (childrenLength === 1) {
     props.children = children;
@@ -543,6 +549,8 @@ export function cloneElement(element, config, children) {
 
 /**
  * Verifies the object is a ReactElement.
+ * 检查是否是合法Element的函数
+ * 
  * See https://reactjs.org/docs/react-api.html#isvalidelement
  * @param {?object} object
  * @return {boolean} True if `object` is a ReactElement.

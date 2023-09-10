@@ -244,6 +244,19 @@ export function createContainer(
   hydrate: boolean,
   hydrationCallbacks: null | SuspenseHydrationCallbacks,
 ): OpaqueRoot {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 08:54:52
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'createContainer'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberReconciler.old.js/createContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   return createFiberRoot(containerInfo, tag, hydrate, hydrationCallbacks);
 }
 

@@ -213,6 +213,19 @@ const createFiber = function(
   key: null | string,
   mode: TypeOfMode,
 ): Fiber {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 08:56:50
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'createFiber'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiber.old.js/createFiber',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   // $FlowFixMe: the shapes are exact here but Flow doesn't like constructors
   return new FiberNode(tag, pendingProps, key, mode);
 };
@@ -429,6 +442,19 @@ export function resetWorkInProgress(workInProgress: Fiber, renderLanes: Lanes) {
 }
 
 export function createHostRootFiber(tag: RootTag): Fiber {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 08:56:29
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'createHostRootFiber'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiber.old.js/createHostRootFiber',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   let mode;
   if (tag === ConcurrentRoot) {
     mode = ConcurrentMode | BlockingMode | StrictMode;

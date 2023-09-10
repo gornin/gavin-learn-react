@@ -2,6 +2,18 @@
 
 This is an experimental package for creating custom React renderers.
 
+react 得以运行的核心包(综合协调react-dom,react,scheduler各包之间的调用与配合).管理 react 应用`状态的输入`和`结果的输出`. 将输入信号最终转换成输出信号传递给渲染器.
+
+- 接受输入(scheduleUpdateOnFiber), 将 fiber树 生成逻辑封装到一个回调函数中(涉及fiber树形结构, fiber.updateQueue队列, 调和算法等),
+- 把此回调函数( performSyncWorkOnRoot 或 performConcurrentWorkOnRoot )送入 scheduler 进行调度
+- scheduler 会控制回调函数执行的时机, 回调函数执行完成后得到全新的 fiber 树
+- 再调用渲染器(如 react-dom , react-native 等)将 fiber 树形结构最终反映到界面上
+
+react-reconciler包, 有 3 个核心职责:
+- 装载渲染器, 渲染器必须实现HostConfig协议(如: react-dom), 保证在需要的时候, 能够正确调用渲染器的 api, 生成实际节点(如: dom节点).
+- 接收react-dom包(初次render)和react包(后续更新setState)发起的更新请求.
+- 将fiber树的构造过程包装在一个回调函数中, 并将此回调函数传入到scheduler包等待调度.
+
 **Its API is not as stable as that of React, React Native, or React DOM, and does not follow the common versioning scheme.**
 
 **Use it at your own risk.**

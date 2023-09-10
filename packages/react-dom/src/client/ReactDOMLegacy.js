@@ -114,6 +114,19 @@ function legacyCreateRootFromDOMContainer(
   container: Container,
   forceHydrate: boolean,
 ): RootType {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 17:27:07
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'legacyCreateRootFromDOMContainer'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-dom/src/client/ReactDOMLegacy.js/legacyCreateRootFromDOMContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   const shouldHydrate =
     forceHydrate || shouldHydrateDueToLegacyHeuristic(container);
   // First clear any existing content.
@@ -189,6 +202,23 @@ function legacyRenderSubtreeIntoContainer(
   forceHydrate: boolean,
   callback: ?Function,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 16:49:14
+  function getRandColor(opacity) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'legacyRenderSubtreeIntoContainer'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log(
+    '%c=> packages/react-dom/src/client/ReactDOMLegacy.js/legacyRenderSubtreeIntoContainer',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
+  
+  /* ------------------------------------------------------------ 昂 */
+
   if (__DEV__) {
     topLevelUpdateWarnings(container);
     warnOnInvalidCallback(callback === undefined ? null : callback, 'render');
@@ -199,7 +229,7 @@ function legacyRenderSubtreeIntoContainer(
   let root: RootType = (container._reactRootContainer: any);
   let fiberRoot;
   if (!root) {
-    // Initial mount
+    // Initial mount 挂载，首次渲染
     root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
       container,
       forceHydrate,
@@ -296,9 +326,9 @@ export function hydrate(
 
 /**
  * render 方法，老版本react经常用到，新用法为createRoot
- * @param {*} element
- * @param {*} container
- * @param {*} callback
+ * @param {*} element jsx对象
+ * @param {*} container 挂载dom
+ * @param {*} callback 回调
  * @returns
  */
 export function render(
@@ -306,10 +336,22 @@ export function render(
   container: Container,
   callback: ?Function,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 16:48:29
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'render'
+  // eslint-disable-next-line react-internal/no-production-logging
   console.log(
-    '%cAPP RENDERING, I am the render function in packages/react-dom/src/client/ReactDOMLegacy.js',
-    'color:gold;background-color:#000;font-size:20px;padding:8px;',
+    '%c=> packages/react-dom/src/client/ReactDOMLegacy.js/render',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
   );
+  /* ------------------------------------------------------------ 昂 */
+
   invariant(
     isValidContainer(container),
     'Target container is not a DOM element.',
@@ -326,6 +368,7 @@ export function render(
       );
     }
   }
+  // 主要就是调用legacyRenderSubtreeIntoContainer
   return legacyRenderSubtreeIntoContainer(
     null,
     element,

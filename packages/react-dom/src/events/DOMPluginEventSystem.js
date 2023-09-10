@@ -320,6 +320,21 @@ const listeningMarker =
     .slice(2);
 
 export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:36:02
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'listenToAllSupportedEvents'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-dom/src/events/DOMPluginEventSystem.js/listenToAllSupportedEvents',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   if (enableEagerRootListeners) {
     if ((rootContainerElement: any)[listeningMarker]) {
       // Performance optimization: don't iterate through events
@@ -329,6 +344,7 @@ export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
       return;
     }
     (rootContainerElement: any)[listeningMarker] = true;
+    // .forEach() 被记为(anonymous)
     allNativeEvents.forEach(domEventName => {
       if (!nonDelegatedEvents.has(domEventName)) {
         listenToNativeEvent(
@@ -355,6 +371,10 @@ export function listenToNativeEvent(
   targetElement: Element | null,
   eventSystemFlags?: EventSystemFlags = 0,
 ): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:38:45
+  /* ------------------------------------------------------------ 昂 */
+  
   let target = rootContainerElement;
 
   // selectionchange needs to be attached to the document
@@ -472,6 +492,10 @@ function addTrappedEventListener(
   isCapturePhaseListener: boolean,
   isDeferredListenerForLegacyFBSupport?: boolean,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:41:42
+  /* ------------------------------------------------------------ 昂 */
+  
   let listener = createEventListenerWrapperWithPriority(
     targetContainer,
     domEventName,

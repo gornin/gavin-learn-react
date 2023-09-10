@@ -49,6 +49,21 @@ export function invokeGuardedCallback<A, B, C, D, E, F, Context>(
   e: E,
   f: F,
 ): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:21:33
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'invokeGuardedCallback'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/shared/ReactErrorUtils.js/invokeGuardedCallback',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   hasError = false;
   caughtError = null;
   invokeGuardedCallbackImpl.apply(reporter, arguments);

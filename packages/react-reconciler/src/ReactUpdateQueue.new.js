@@ -150,6 +150,22 @@ if (__DEV__) {
 }
 
 export function initializeUpdateQueue<State>(fiber: Fiber): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 08:58:24
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'initializeUpdateQueue'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactUpdateQueue.new.js/initializeUpdateQueue',`color:${getRandColor()};font-size:16px;padding:4px 8px;`);
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('创建updateQueue，并将之保存在fiber里');
+  
+  /* ------------------------------------------------------------ 昂 */
+  
   const queue: UpdateQueue<State> = {
     baseState: fiber.memoizedState,
     firstBaseUpdate: null,

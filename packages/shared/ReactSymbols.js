@@ -34,6 +34,7 @@ export let REACT_DEBUG_TRACING_MODE_TYPE = 0xeae1;
 export let REACT_OFFSCREEN_TYPE = 0xeae2;
 export let REACT_LEGACY_HIDDEN_TYPE = 0xeae3;
 
+// 在v17.0.2中, 定义了 20 种内部节点类型. 根据运行时环境不同, 分别采用 16 进制的字面量和Symbol进行表示.
 if (typeof Symbol === 'function' && Symbol.for) {
   const symbolFor = Symbol.for;
   REACT_ELEMENT_TYPE = symbolFor('react.element');

@@ -125,6 +125,21 @@ export function markRenderYielded(): void {
 }
 
 export function markRenderStopped(): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:12:41
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'markRenderStopped'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/SchedulingProfiler.js/markRenderStopped',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   if (enableSchedulingProfiler) {
     if (supportsUserTiming) {
       performance.mark('--render-stop');

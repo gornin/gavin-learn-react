@@ -79,6 +79,21 @@ if (__DEV__) {
       e: E,
       f: F,
     ) {
+      /* ------------------------------------------------------------ 宇 */
+      // TODO: 2023-09-10 15:22:43
+      function getRandColor(opacity = 1) {
+        function rand(base = 256) {
+          return Math.floor(Math.random() * base);
+        }
+        return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+      }
+      // typedown current function name 'invokeGuardedCallbackDev'
+      // eslint-disable-next-line react-internal/no-production-logging
+      console.log('%c=> packages/shared/invokeGuardedCallbackImpl.js/invokeGuardedCallbackDev',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+      // eslint-disable-next-line react-internal/no-production-logging
+      console.log('');
+      /* ------------------------------------------------------------ 昂 */
+      
       // If document doesn't exist we know for sure we will crash in this method
       // when we call document.createEvent(). However this can cause confusing
       // errors: https://github.com/facebookincubator/create-react-app/issues/3482

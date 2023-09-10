@@ -802,6 +802,21 @@ function completeWork(
   workInProgress: Fiber,
   renderLanes: Lanes,
 ): Fiber | null {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:10:33
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'completeWork'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberCompleteWork.new.js/completeWork',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const newProps = workInProgress.pendingProps;
 
   switch (workInProgress.tag) {

@@ -8,6 +8,13 @@
 
 /* eslint-disable no-var */
 
+/**
+ * 任务调度循环是以二叉堆为数据结构(详见react 算法之堆排序), 循环执行堆的顶点, 直到堆被清空.
+ * 它调度的是每一个任务(task), 而不关心这个任务具体是干什么的,
+ * 具体任务其实就是执行回调函数performSyncWorkOnRoot或performConcurrentWorkOnRoot
+ * 大循环(任务调度循环)负责调度task
+ */
+
 import {
   enableSchedulerDebugging,
   enableProfiling,
@@ -58,7 +65,7 @@ var LOW_PRIORITY_TIMEOUT = 10000;
 // Never times out
 var IDLE_PRIORITY_TIMEOUT = maxSigned31BitInt;
 
-// Tasks are stored on a min heap
+// Tasks are stored on a min heap 任务队列 小顶堆数组
 var taskQueue = [];
 var timerQueue = [];
 
@@ -218,6 +225,10 @@ function workLoop(hasTimeRemaining, initialTime) {
 }
 
 function unstable_runWithPriority(priorityLevel, eventHandler) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:15:50
+  /* ------------------------------------------------------------ 昂 */
+  
   switch (priorityLevel) {
     case ImmediatePriority:
     case UserBlockingPriority:
@@ -316,13 +327,15 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
 
   var expirationTime = startTime + timeout;
 
+  // Task 对象
+  // 注意task中没有next属性, 它不是一个链表, 其顺序是通过堆排序来实现的(小顶堆数组, 始终保证数组中的第一个task对象优先级最高)
   var newTask = {
-    id: taskIdCounter++,
-    callback,
-    priorityLevel,
-    startTime,
-    expirationTime,
-    sortIndex: -1,
+    id: taskIdCounter++, // 唯一标识
+    callback, // task 最核心的字段, 指向react-reconciler包所提供的回调函数
+    priorityLevel, // 优先级
+    startTime, // 一个时间戳,代表 task 的开始时间(创建时间 + 延时时间)
+    expirationTime, // 过期时间
+    sortIndex: -1, // 控制 task 在队列中的次序, 值越小的越靠前
   };
   if (enableProfiling) {
     newTask.isQueued = false;

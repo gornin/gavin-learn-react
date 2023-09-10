@@ -7,6 +7,14 @@
  * @flow
  */
 
+/**
+ * fiber构造循环,控制 fiber 树的构造,整个过程是一个深度优先遍历.
+ * fiber构造循环是以树为数据结构, 从上至下执行深度优先遍历
+ * fiber构造循环的逻辑偏向具体实现, 它只是任务(task)的一部分
+ * (如performSyncWorkOnRoot包括: fiber树的构造, DOM渲染, 调度检测), 只负责fiber树的构造.
+ * fiber构造循环是任务调度循环中的任务(task)的一部分. 它们是从属关系, 每个任务都会重新构造一个fiber树.
+ * 小循环(fiber 构造循环)负责实现task
+ */
 import type {Thenable, Wakeable} from 'shared/ReactTypes';
 import type {Fiber, FiberRoot} from './ReactInternalTypes';
 import type {Lanes, Lane} from './ReactFiberLane';
@@ -530,6 +538,21 @@ export function scheduleUpdateOnFiber(
   lane: Lane,
   eventTime: number,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:54:02
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'scheduleUpdateOnFiber'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/scheduleUpdateOnFiber',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   checkForNestedUpdates();
   warnAboutRenderPhaseUpdatesInDEV(fiber);
 
@@ -637,6 +660,21 @@ function markUpdateLaneFromFiberToRoot(
   sourceFiber: Fiber,
   lane: Lane,
 ): FiberRoot | null {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:55:37
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'markUpdateLaneFromFiberToRoot'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/markUpdateLaneFromFiberToRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   // Update the source fiber's lanes
   sourceFiber.lanes = mergeLanes(sourceFiber.lanes, lane);
   let alternate = sourceFiber.alternate;
@@ -683,6 +721,21 @@ function markUpdateLaneFromFiberToRoot(
 // root has work on. This function is called on every update, and right before
 // exiting a task.
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:24:00
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'ensureRootIsScheduled'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/ensureRootIsScheduled',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const existingCallbackNode = root.callbackNode;
 
   // Check if any lanes are being starved by other work. If so, mark them as
@@ -974,6 +1027,21 @@ function markRootSuspended(root, suspendedLanes) {
 // This is the entry point for synchronous tasks that don't go
 // through Scheduler
 function performSyncWorkOnRoot(root) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:57:22
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'performSyncWorkOnRoot'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/performSyncWorkOnRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   invariant(
     (executionContext & (RenderContext | CommitContext)) === NoContext,
     'Should not already be working.',
@@ -1200,6 +1268,21 @@ export function discreteUpdates<A, B, C, D, R>(
 }
 
 export function unbatchedUpdates<A, R>(fn: (a: A) => R, a: A): R {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:46:09
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'unbatchedUpdates'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/unbatchedUpdates',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const prevExecutionContext = executionContext;
   executionContext &= ~BatchedContext;
   executionContext |= LegacyUnbatchedContext;
@@ -1499,6 +1582,21 @@ export function renderHasNotSuspendedYet(): boolean {
 }
 
 function renderRootSync(root: FiberRoot, lanes: Lanes) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:58:02
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'renderRootSync'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/renderRootSync',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const prevExecutionContext = executionContext;
   executionContext |= RenderContext;
   const prevDispatcher = pushDispatcher();
@@ -1567,6 +1665,21 @@ function renderRootSync(root: FiberRoot, lanes: Lanes) {
 // The work loop is an extremely hot path. Tell Closure not to inline it.
 /** @noinline */
 function workLoopSync() {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:01:23
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'workLoopSync'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/workLoopSync',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   // Already timed out, so perform work without checking if we need to yield.
   while (workInProgress !== null) {
     performUnitOfWork(workInProgress);
@@ -1651,6 +1764,21 @@ function workLoopConcurrent() {
 }
 
 function performUnitOfWork(unitOfWork: Fiber): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:02:47
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'performUnitOfWork'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/performUnitOfWork',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   // The current, flushed, state of this fiber is the alternate. Ideally
   // nothing should rely on this, but relying on it here means that we don't
   // need an additional field on the work in progress.
@@ -1679,6 +1807,21 @@ function performUnitOfWork(unitOfWork: Fiber): void {
 }
 
 function completeUnitOfWork(unitOfWork: Fiber): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:03:34
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'completeUnitOfWork'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/completeUnitOfWork',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   // Attempt to complete the current unit of work, then move to the next
   // sibling. If there are no more siblings, return to the parent fiber.
   let completedWork = unitOfWork;
@@ -1773,6 +1916,19 @@ function completeUnitOfWork(unitOfWork: Fiber): void {
 }
 
 function commitRoot(root) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 23:10:34
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'commitRoot'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/commitRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   const renderPriorityLevel = getCurrentPriorityLevel();
   runWithPriority(
     ImmediateSchedulerPriority,
@@ -2127,6 +2283,21 @@ function commitRootImpl(root, renderPriorityLevel) {
 }
 
 function commitBeforeMutationEffects(firstChild: Fiber) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:18:39
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'commitBeforeMutationEffects'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/commitBeforeMutationEffects',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   let fiber = firstChild;
   while (fiber !== null) {
     if (fiber.deletions !== null) {
@@ -2216,6 +2387,21 @@ function commitMutationEffects(
   root: FiberRoot,
   renderPriorityLevel: ReactPriorityLevel,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 15:19:00
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'commitMutationEffects'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberWorkLoop.new.js/commitMutationEffects',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   let fiber = firstChild;
   while (fiber !== null) {
     const deletions = fiber.deletions;

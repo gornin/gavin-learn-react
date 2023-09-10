@@ -244,6 +244,19 @@ export function createContainer(
   hydrate: boolean,
   hydrationCallbacks: null | SuspenseHydrationCallbacks,
 ): OpaqueRoot {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 17:32:10
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'createContainer'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberReconciler.new.js/createContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   return createFiberRoot(containerInfo, tag, hydrate, hydrationCallbacks);
 }
 
@@ -253,6 +266,21 @@ export function updateContainer(
   parentComponent: ?React$Component<any, any>,
   callback: ?Function,
 ): Lane {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 13:53:39
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'updateContainer'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberReconciler.new.js/updateContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   if (__DEV__) {
     onScheduleRoot(container, element);
   }
@@ -337,6 +365,19 @@ export {
 export function getPublicRootInstance(
   container: OpaqueRoot,
 ): React$Component<any, any> | PublicInstance | null {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 17:38:15
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'getPublicRootInstance'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberReconciler.new.js/getPublicRootInstance',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   const containerFiber = container.current;
   if (!containerFiber.child) {
     return null;

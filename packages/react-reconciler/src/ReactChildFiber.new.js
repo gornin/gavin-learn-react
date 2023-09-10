@@ -1270,6 +1270,21 @@ function ChildReconciler(shouldTrackSideEffects) {
     newChild: any,
     lanes: Lanes,
   ): Fiber | null {
+    /* ------------------------------------------------------------ 宇 */
+    // TODO: 2023-09-10 14:52:50
+    function getRandColor(opacity = 1) {
+      function rand(base = 256) {
+        return Math.floor(Math.random() * base);
+      }
+      return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    }
+    // typedown current function name 'reconcileChildFibers'
+    // eslint-disable-next-line react-internal/no-production-logging
+    console.log('%c=> packages/react-reconciler/src/ReactChildFiber.new.js/reconcileChildFibers',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+    // eslint-disable-next-line react-internal/no-production-logging
+    console.log('');
+    /* ------------------------------------------------------------ 昂 */
+    
     // This function is not recursive.
     // If the top level item is an array, we treat it as a set of children,
     // not as a fragment. Nested arrays on the other hand will be treated as

@@ -44,6 +44,21 @@ function getRootHostContainer(): Container {
 }
 
 function pushHostContainer(fiber: Fiber, nextRootInstance: Container) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:44:27
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'pushHostContainer'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberHostContext.new.js/pushHostContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   // Push current root instance onto the stack;
   // This allows us to reset root when portals are popped.
   push(rootInstanceStackCursor, nextRootInstance, fiber);
@@ -75,6 +90,21 @@ function getHostContext(): HostContext {
 }
 
 function pushHostContext(fiber: Fiber): void {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-10 14:50:59
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'pushHostContext'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-reconciler/src/ReactFiberHostContext.new.js/pushHostContext',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('');
+  /* ------------------------------------------------------------ 昂 */
+  
   const rootInstance: Container = requiredContext(
     rootInstanceStackCursor.current,
   );

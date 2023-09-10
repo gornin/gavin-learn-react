@@ -68,6 +68,19 @@ function ReactDOMBlockingRoot(
   tag: RootTag,
   options: void | RootOptions,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 17:29:05
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'ReactDOMBlockingRoot'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-dom/src/client/ReactDOMRoot.js/ReactDOMBlockingRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   this._internalRoot = createRootImpl(container, tag, options);
 }
 
@@ -122,6 +135,19 @@ function createRootImpl(
   tag: RootTag,
   options: void | RootOptions,
 ) {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 17:29:53
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'createRootImpl'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-dom/src/client/ReactDOMRoot.js/createRootImpl',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   // Tag is either LegacyRoot or Concurrent Root
   const hydrate = options != null && options.hydrate === true;
   const hydrationCallbacks =
@@ -196,6 +222,19 @@ export function createLegacyRoot(
   container: Container,
   options?: RootOptions,
 ): RootType {
+  /* ------------------------------------------------------------ 宇 */
+  // TODO: 2023-09-09 17:28:35
+  function getRandColor(opacity = 1) {
+    function rand(base = 256) {
+      return Math.floor(Math.random() * base);
+    }
+    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+  }
+  // typedown current function name 'createLegacyRoot'
+  // eslint-disable-next-line react-internal/no-production-logging
+  console.log('%c=> packages/react-dom/src/client/ReactDOMRoot.js/createLegacyRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  /* ------------------------------------------------------------ 昂 */
+  
   return new ReactDOMBlockingRoot(container, LegacyRoot, options);
 }
 
