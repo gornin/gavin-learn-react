@@ -120,13 +120,16 @@ function legacyCreateRootFromDOMContainer(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'legacyCreateRootFromDOMContainer'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-dom/src/client/ReactDOMLegacy.js/legacyCreateRootFromDOMContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-dom/src/client/ReactDOMLegacy.js/legacyCreateRootFromDOMContainer',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   const shouldHydrate =
     forceHydrate || shouldHydrateDueToLegacyHeuristic(container);
   // First clear any existing content.
@@ -208,7 +211,7 @@ function legacyRenderSubtreeIntoContainer(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'legacyRenderSubtreeIntoContainer'
   // eslint-disable-next-line react-internal/no-production-logging
@@ -216,7 +219,7 @@ function legacyRenderSubtreeIntoContainer(
     '%c=> packages/react-dom/src/client/ReactDOMLegacy.js/legacyRenderSubtreeIntoContainer',
     `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
   );
-  
+
   /* ------------------------------------------------------------ 昂 */
 
   if (__DEV__) {
@@ -325,7 +328,14 @@ export function hydrate(
 }
 
 /**
- * render 方法，老版本react经常用到，新用法为createRoot
+ * render 方法
+ *
+ * html文件 <div id="root"></div>
+ *
+ * ReactDOM.render(<App />, document.getElementById("root"), () => {});
+ *
+ * concurrent 用法为 ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+ *
  * @param {*} element jsx对象
  * @param {*} container 挂载dom
  * @param {*} callback 回调
@@ -342,7 +352,7 @@ export function render(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'render'
   // eslint-disable-next-line react-internal/no-production-logging
@@ -368,7 +378,6 @@ export function render(
       );
     }
   }
-  // 主要就是调用legacyRenderSubtreeIntoContainer
   return legacyRenderSubtreeIntoContainer(
     null,
     element,

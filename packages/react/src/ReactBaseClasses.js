@@ -17,20 +17,21 @@ if (__DEV__) {
 /**
  * Base class helpers for the updating state of a component.
  * component函数中主要在当前实例上挂载了props、context、refs、updater等，
- * 所以在组件的实例上能拿到这些，而更新主要的承载结构就是updater， 
+ * 所以在组件的实例上能拿到这些，而更新主要的承载结构就是updater，
  * 主要关注isReactComponent，它用来表示这个组件是类组件
  */
 function Component(props, context, updater) {
   this.props = props;
   this.context = context;
   // If a component has string refs, we will assign a different object later.
-  this.refs = emptyObject;
+  this.refs = emptyObject; // ref挂载的对象
   // We initialize the default updater but the real one gets injected by the
   // renderer.
-  this.updater = updater || ReactNoopUpdateQueue;
+  // 更新主要的承载结构
+  this.updater = updater || ReactNoopUpdateQueue; // 更新的对象
 }
 
-// 表示是classComponent
+// 表示是 classComponent 类组件
 Component.prototype.isReactComponent = {};
 
 /**
@@ -124,11 +125,13 @@ if (__DEV__) {
   }
 }
 
+// 假的，仿真的
 function ComponentDummy() {}
 ComponentDummy.prototype = Component.prototype;
 
 /**
  * Convenience component with default shallow equality check for sCU.
+ * sCU 方便组件默认浅相等检查
  * PureComponent和Component差不多，他会进行原型继承，然后赋值isPureReactComponent
  */
 function PureComponent(props, context, updater) {

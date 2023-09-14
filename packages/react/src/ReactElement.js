@@ -146,13 +146,15 @@ function warnIfStringRefCannotBeAutoConverted(config) {
 const ReactElement = function(type, key, ref, self, source, owner, props) {
   const element = {
     // This tag allows us to uniquely identify this as a React Element
+    // 组件类型，表示是 ReactElement 类型
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
+    // type 就是标签名，普通节点是字符串，class或function组件首字母要大写
     type: type, // class或function
-    key: key, // 
-    ref: ref, // 
-    props: props, // 
+    key: key,
+    ref: ref,
+    props: props,
 
     // Record the component responsible for creating this element.
     _owner: owner,
@@ -344,7 +346,7 @@ export function jsxDEV(type, config, maybeKey, source, self) {
 /**
  * Create and return a new ReactElement of the given type.
  * See https://reactjs.org/docs/react-api.html#createelement
- * 
+ *
  * 处理config，把除了保留属性外的其他config赋值给props
  * 把children处理后赋值给props.children
  * 处理defaultProps
@@ -364,6 +366,7 @@ export function createElement(type, config, children) {
   let self = null;
   let source = null;
 
+  // 处理config，把除了保留属性外的其他config赋值给props
   if (config != null) {
     if (hasValidRef(config)) {
       ref = config.ref;
@@ -409,7 +412,7 @@ export function createElement(type, config, children) {
     props.children = childArray;
   }
 
-  // Resolve default props
+  // Resolve default props 处理 defaultProps
   if (type && type.defaultProps) {
     const defaultProps = type.defaultProps;
     for (propName in defaultProps) {
@@ -550,7 +553,8 @@ export function cloneElement(element, config, children) {
 /**
  * Verifies the object is a ReactElement.
  * 检查是否是合法Element的函数
- * 
+ * 就用到了$$typeof === REACT_ELEMENT_TYPE // 0xeac7
+ *
  * See https://reactjs.org/docs/react-api.html#isvalidelement
  * @param {?object} object
  * @return {boolean} True if `object` is a ReactElement.

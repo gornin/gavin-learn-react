@@ -74,13 +74,16 @@ function ReactDOMBlockingRoot(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'ReactDOMBlockingRoot'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-dom/src/client/ReactDOMRoot.js/ReactDOMBlockingRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-dom/src/client/ReactDOMRoot.js/ReactDOMBlockingRoot',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   this._internalRoot = createRootImpl(container, tag, options);
 }
 
@@ -141,13 +144,16 @@ function createRootImpl(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'createRootImpl'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-dom/src/client/ReactDOMRoot.js/createRootImpl',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-dom/src/client/ReactDOMRoot.js/createRootImpl',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   // Tag is either LegacyRoot or Concurrent Root
   const hydrate = options != null && options.hydrate === true;
   const hydrationCallbacks =
@@ -194,6 +200,8 @@ function createRootImpl(
   return root;
 }
 
+// concurrent 模式： ReactDOM.createRoot(rootNode).render(<App />)
+// 目前在实验中，未来稳定之后，打算作为 React 的默认开发模式。这个模式开启了所有的新功能。
 export function createRoot(
   container: Container,
   options?: RootOptions,
@@ -206,6 +214,8 @@ export function createRoot(
   return new ReactDOMRoot(container, options);
 }
 
+// blocking 模式： ReactDOM.createBlockingRoot(rootNode).render(<App />)
+// 目前正在实验中。作为迁移到 concurrent 模式的第一个步骤。
 export function createBlockingRoot(
   container: Container,
   options?: RootOptions,
@@ -218,6 +228,16 @@ export function createBlockingRoot(
   return new ReactDOMBlockingRoot(container, BlockingRoot, options);
 }
 
+/**
+ * 这是当前 React app 使用的方式。当前没有计划删除本模式，但是这个模式可能不支持这些新功能。
+ * legacy 模式在合成事件中有自动批处理的功能，但仅限于一个浏览器任务。
+ * 非 React 事件想使用这个功能必须使用 unstable_batchedUpdates。
+ * 在 blocking 模式和 concurrent 模式下，所有的 setState 在默认情况下都是批处理的。
+ *
+ * @param {*} container
+ * @param {*} options
+ * @returns
+ */
 export function createLegacyRoot(
   container: Container,
   options?: RootOptions,
@@ -228,13 +248,16 @@ export function createLegacyRoot(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'createLegacyRoot'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-dom/src/client/ReactDOMRoot.js/createLegacyRoot',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-dom/src/client/ReactDOMRoot.js/createLegacyRoot',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   return new ReactDOMBlockingRoot(container, LegacyRoot, options);
 }
 

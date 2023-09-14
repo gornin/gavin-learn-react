@@ -119,21 +119,22 @@ function FiberNode(
   key: null | string,
   mode: TypeOfMode,
 ) {
-  // Instance
-  this.tag = tag;
-  this.key = key;
-  this.elementType = null;
-  this.type = null;
-  this.stateNode = null;
+  // Instance 作为静态的数据结构，保存节点信息
+  this.tag = tag; // 对应组件的类型
+  this.key = key; // key属性
+  this.elementType = null; // 元素类型
+  this.type = null; // funtion或class
+  this.stateNode = null; // 真实dom节点
 
-  // Fiber
-  this.return = null;
-  this.child = null;
-  this.sibling = null;
+  // Fiber 作为架构，连接成fiber tree
+  this.return = null; // 父节点
+  this.child = null; // 第一个子节点
+  this.sibling = null; // 兄弟节点
   this.index = 0;
 
   this.ref = null;
 
+  // 作为工作单元，计算state
   this.pendingProps = pendingProps;
   this.memoizedProps = null;
   this.updateQueue = null;
@@ -149,9 +150,11 @@ function FiberNode(
   this.firstEffect = null;
   this.lastEffect = null;
 
+  // 优先级相关属性
   this.lanes = NoLanes;
   this.childLanes = NoLanes;
 
+  // current 和 workInProgress 的指针
   this.alternate = null;
 
   if (enableProfilerTimer) {
@@ -207,6 +210,13 @@ function FiberNode(
 //    is faster.
 // 5) It should be easy to port this to a C struct and keep a C implementation
 //    compatible.
+// 这仍然是一个构造函数，而不是POJO构造函数
+// 请确保我们做到以下几点:
+// 1) 任何人都不应该在上面添加实例方法。实例方法可以是更难以预测，当他们得到优化，他们几乎在静态编译器中不能正确内联。
+// 2) 任何人都不应该依赖' instanceof Fiber '进行类型测试。我们应该总是知道它是一个fiber。
+// 3) 我们可能想尝试使用数字键，因为它们更容易在非jit环境中进行优化。
+// 4) 我们可以很容易地从构造函数转换为createFiber对象字面量更快。
+// 5) 将它移植到C struct 并保持 C实现 应该很容易兼容。
 const createFiber = function(
   tag: WorkTag,
   pendingProps: mixed,
@@ -219,13 +229,16 @@ const createFiber = function(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'createFiber'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-reconciler/src/ReactFiber.old.js/createFiber',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-reconciler/src/ReactFiber.old.js/createFiber',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   // $FlowFixMe: the shapes are exact here but Flow doesn't like constructors
   return new FiberNode(tag, pendingProps, key, mode);
 };
@@ -266,6 +279,7 @@ export function resolveLazyComponentTag(Component: Function): WorkTag {
 // This is used to create an alternate fiber to do work on.
 export function createWorkInProgress(current: Fiber, pendingProps: any): Fiber {
   let workInProgress = current.alternate;
+  // 区分是mount还是update
   if (workInProgress === null) {
     // We use a double buffering pooling technique because we know that we'll
     // only ever need at most two versions of a tree. We pool the "other" unused
@@ -448,13 +462,16 @@ export function createHostRootFiber(tag: RootTag): Fiber {
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'createHostRootFiber'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-reconciler/src/ReactFiber.old.js/createHostRootFiber',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-reconciler/src/ReactFiber.old.js/createHostRootFiber',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   let mode;
   if (tag === ConcurrentRoot) {
     mode = ConcurrentMode | BlockingMode | StrictMode;
