@@ -92,6 +92,17 @@ ChangeEventPlugin.registerEvents();
 SelectEventPlugin.registerEvents();
 BeforeInputEventPlugin.registerEvents();
 
+/**
+ * dispatchEventsForPlugins调用
+ *
+ * @param {*} dispatchQueue
+ * @param {*} domEventName
+ * @param {*} targetInst
+ * @param {*} nativeEvent
+ * @param {*} nativeEventTarget
+ * @param {*} eventSystemFlags
+ * @param {*} targetContainer
+ */
 function extractEvents(
   dispatchQueue: DispatchQueue,
   domEventName: DOMEventName,
@@ -101,6 +112,9 @@ function extractEvents(
   eventSystemFlags: EventSystemFlags,
   targetContainer: EventTarget,
 ) {
+  // dispatchEvent函数的调用链路中, 通过不同的插件, 处理不同的事件.
+  // 其中最常见的事件都会由SimpleEventPlugin.extractEvents进行处理
+
   // TODO: we should remove the concept of a "SimpleEventPlugin".
   // This is the basic functionality of the event system. All
   // the other plugins are essentially polyfills. So the plugin
@@ -237,15 +251,20 @@ function processDispatchQueueItemsInOrder(
 ): void {
   let previousInstance;
   if (inCapturePhase) {
+    // 1. capture事件: 倒序遍历listeners
+    // capture事件: 从上至下调用fiber树中绑定的回调函数
     for (let i = dispatchListeners.length - 1; i >= 0; i--) {
       const {instance, currentTarget, listener} = dispatchListeners[i];
       if (instance !== previousInstance && event.isPropagationStopped()) {
         return;
       }
+      // 在fiber节点上绑定的listener函数被执行
       executeDispatch(event, listener, currentTarget);
       previousInstance = instance;
     }
   } else {
+    // 2. bubble事件: 顺序遍历listeners
+    // bubble事件: 从下至上调用fiber树中绑定的回调函数
     for (let i = 0; i < dispatchListeners.length; i++) {
       const {instance, currentTarget, listener} = dispatchListeners[i];
       if (instance !== previousInstance && event.isPropagationStopped()) {
@@ -257,6 +276,7 @@ function processDispatchQueueItemsInOrder(
   }
 }
 
+// 真正执行派发
 export function processDispatchQueue(
   dispatchQueue: DispatchQueue,
   eventSystemFlags: EventSystemFlags,
@@ -271,6 +291,15 @@ export function processDispatchQueue(
   rethrowCaughtError();
 }
 
+/**
+ * dispatchEventForPluginEventSystem调用
+ *
+ * @param {*} domEventName
+ * @param {*} eventSystemFlags
+ * @param {*} nativeEvent
+ * @param {*} targetInst
+ * @param {*} targetContainer
+ */
 function dispatchEventsForPlugins(
   domEventName: DOMEventName,
   eventSystemFlags: EventSystemFlags,
@@ -289,9 +318,19 @@ function dispatchEventsForPlugins(
     eventSystemFlags,
     targetContainer,
   );
+  // 遍历队列，派发事件
   processDispatchQueue(dispatchQueue, eventSystemFlags);
 }
 
+/**
+ * react的事件体系, 不是全部都通过事件委托来实现的.
+ * 有一些特殊情况, 是直接绑定到对应 DOM 元素上的(如:scroll, load),特殊事件最大的不同是监听的 DOM 元素不同
+ * 它们都通过listenToNonDelegatedEvent函数进行绑定.
+ *
+ * delegate 委托，授权
+ * @param {*} domEventName
+ * @param {*} targetElement
+ */
 export function listenToNonDelegatedEvent(
   domEventName: DOMEventName,
   targetElement: Element,
@@ -316,7 +355,7 @@ export function listenToNonDelegatedEvent(
 const listeningMarker =
   '_reactListening' +
   Math.random()
-    .toString(36)
+    .toString(36) // '0.6kkh1nkbs1m'
     .slice(2);
 
 export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
@@ -326,16 +365,20 @@ export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'listenToAllSupportedEvents'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-dom/src/events/DOMPluginEventSystem.js/listenToAllSupportedEvents',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-dom/src/events/DOMPluginEventSystem.js/listenToAllSupportedEvents',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   // eslint-disable-next-line react-internal/no-production-logging
   console.log('');
   /* ------------------------------------------------------------ 昂 */
-  
+
   if (enableEagerRootListeners) {
+    // 1. 节流优化, 保证全局注册只被调用一次
     if ((rootContainerElement: any)[listeningMarker]) {
       // Performance optimization: don't iterate through events
       // for the same portal container or root node more than once.
@@ -344,19 +387,20 @@ export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
       return;
     }
     (rootContainerElement: any)[listeningMarker] = true;
+    // 2. 遍历allNativeEvents 监听冒泡和捕获阶段的事件
     // .forEach() 被记为(anonymous)
     allNativeEvents.forEach(domEventName => {
       if (!nonDelegatedEvents.has(domEventName)) {
         listenToNativeEvent(
           domEventName,
-          false,
+          false, // 冒泡阶段监听
           ((rootContainerElement: any): Element),
           null,
         );
       }
       listenToNativeEvent(
         domEventName,
-        true,
+        true, // 捕获阶段监听
         ((rootContainerElement: any): Element),
         null,
       );
@@ -374,7 +418,7 @@ export function listenToNativeEvent(
   /* ------------------------------------------------------------ 宇 */
   // TODO: 2023-09-10 13:38:45
   /* ------------------------------------------------------------ 昂 */
-  
+
   let target = rootContainerElement;
 
   // selectionchange needs to be attached to the document
@@ -417,10 +461,12 @@ export function listenToNativeEvent(
   );
   // If the listener entry is empty or we should upgrade, then
   // we need to trap an event listener onto the target.
+  // 利用set数据结构, 保证相同的事件类型只会被注册一次.
   if (!listenerSet.has(listenerSetKey)) {
     if (isCapturePhaseListener) {
       eventSystemFlags |= IS_CAPTURE_PHASE;
     }
+    // 注册事件监听
     addTrappedEventListener(
       target,
       domEventName,
@@ -485,6 +531,7 @@ export function listenToReactEvent(
   }
 }
 
+// trapped 受困的，受限的
 function addTrappedEventListener(
   targetContainer: EventTarget,
   domEventName: DOMEventName,
@@ -495,7 +542,9 @@ function addTrappedEventListener(
   /* ------------------------------------------------------------ 宇 */
   // TODO: 2023-09-10 13:41:42
   /* ------------------------------------------------------------ 昂 */
-  
+  // 1. 构造listener
+  // 在注册原生事件的过程中, 需要重点关注一下监听函数, 即listener函数.
+  // 它实现了把原生事件派发到react体系之内, 非常关键.
   let listener = createEventListenerWrapperWithPriority(
     targetContainer,
     domEventName,
@@ -550,6 +599,8 @@ function addTrappedEventListener(
     };
   }
   // TODO: There are too many combinations here. Consolidate them.
+  // 2. 注册事件监听
+  // 从listenToAllSupportedEvents开始, 调用链路比较长, 最后调用addEventBubbleListener和addEventCaptureListener监听了原生事件.
   if (isCapturePhaseListener) {
     if (isPassiveListener !== undefined) {
       unsubscribeListener = addEventCaptureListenerWithPassiveFlag(
@@ -611,6 +662,16 @@ function isMatchingRootContainer(
   );
 }
 
+/**
+ * attemptToDispatchEvent 调用
+ *
+ * @param {*} domEventName
+ * @param {*} eventSystemFlags
+ * @param {*} nativeEvent
+ * @param {*} targetInst
+ * @param {*} targetContainer
+ * @returns
+ */
 export function dispatchEventForPluginEventSystem(
   domEventName: DOMEventName,
   eventSystemFlags: EventSystemFlags,
@@ -747,9 +808,11 @@ export function accumulateSinglePhaseListeners(
   let instance = targetFiber;
   let lastHostComponent = null;
 
+  // 从targetFiber开始, 向上遍历, 直到 root 为止
   // Accumulate all instances and listeners via the target -> root path.
   while (instance !== null) {
     const {stateNode, tag} = instance;
+    // 当节点类型是HostComponent时(如: div, span, button等类型)
     // Handle listeners that are on HostComponents (i.e. <div>)
     if (tag === HostComponent && stateNode !== null) {
       lastHostComponent = stateNode;
@@ -776,7 +839,7 @@ export function accumulateSinglePhaseListeners(
           });
         }
       }
-
+      // 获取标准的监听函数 (如onClick , onClickCapture等)
       // Standard React on* listeners, i.e. onClick or onClickCapture
       if (reactEventName !== null) {
         const listener = getListener(instance, reactEventName);
@@ -818,6 +881,7 @@ export function accumulateSinglePhaseListeners(
     // If we are only accumulating events for the target, then we don't
     // continue to propagate through the React fiber tree to find other
     // listeners.
+    // 如果只收集目标节点, 则不用向上遍历, 直接退出
     if (accumulateTargetOnly) {
       break;
     }

@@ -7,6 +7,9 @@
  * @flow
  */
 
+// 从listenToAllSupportedEvents开始, 调用链路比较长, 最后调用addEventBubbleListener和addEventCaptureListener监听了原生事件.
+
+// 注册原生事件 冒泡
 export function addEventBubbleListener(
   target: EventTarget,
   eventType: string,
@@ -15,7 +18,7 @@ export function addEventBubbleListener(
   target.addEventListener(eventType, listener, false);
   return listener;
 }
-
+// 注册原生事件 捕获
 export function addEventCaptureListener(
   target: EventTarget,
   eventType: string,

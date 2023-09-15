@@ -167,6 +167,7 @@ function createRootImpl(
   markContainerAsRoot(root.current, container);
   const containerNodeType = container.nodeType;
 
+  // listenToAllSupportedEvents函数, 实际上完成了事件代理
   if (enableEagerRootListeners) {
     const rootContainerElement =
       container.nodeType === COMMENT_NODE ? container.parentNode : container;

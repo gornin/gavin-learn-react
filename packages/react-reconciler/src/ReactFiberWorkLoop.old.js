@@ -1191,6 +1191,7 @@ export function discreteUpdates<A, B, C, D, R>(
 export function unbatchedUpdates<A, R>(fn: (a: A) => R, a: A): R {
   const prevExecutionContext = executionContext;
   executionContext &= ~BatchedContext;
+  // 更改执行上下文为LegacyUnbatchedContext
   executionContext |= LegacyUnbatchedContext;
   try {
     return fn(a);

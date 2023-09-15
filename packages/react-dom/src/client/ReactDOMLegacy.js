@@ -237,7 +237,8 @@ function legacyRenderSubtreeIntoContainer(
       container,
       forceHydrate,
     );
-    fiberRoot = root._internalRoot;
+    // (new) ReactDOMBlockingRoot 里有 this._internalRoot = createRootImpl(container, tag, options);
+    fiberRoot = root._internalRoot; // FiberRootNode
     if (typeof callback === 'function') {
       const originalCallback = callback;
       callback = function() {

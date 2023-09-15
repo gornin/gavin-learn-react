@@ -250,16 +250,29 @@ export function createContainer(
     function rand(base = 256) {
       return Math.floor(Math.random() * base);
     }
-    return `rgba(${rand()},${rand()},${rand()},${opacity||1})`;
+    return `rgba(${rand()},${rand()},${rand()},${opacity || 1})`;
   }
   // typedown current function name 'createContainer'
   // eslint-disable-next-line react-internal/no-production-logging
-  console.log('%c=> packages/react-reconciler/src/ReactFiberReconciler.old.js/createContainer',`color:${getRandColor()};font-size:16px;padding:4px 8px;`)
+  console.log(
+    '%c=> packages/react-reconciler/src/ReactFiberReconciler.old.js/createContainer',
+    `color:${getRandColor()};font-size:16px;padding:4px 8px;`,
+  );
   /* ------------------------------------------------------------ 昂 */
-  
+
   return createFiberRoot(containerInfo, tag, hydrate, hydrationCallbacks);
 }
 
+/**
+ * updateContainer 函数串联了react-dom与react-reconciler
+ * updateContainer 即 react-reconciler 暴露出去的api，供其他包调用
+ *
+ * @param {*} element
+ * @param {*} container
+ * @param {*} parentComponent
+ * @param {*} callback
+ * @returns
+ */
 export function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -270,6 +283,7 @@ export function updateContainer(
     onScheduleRoot(container, element);
   }
   const current = container.current;
+  // 1. 获取当前时间戳, 计算本次更新的优先级
   const eventTime = requestEventTime();
   if (__DEV__) {
     // $FlowExpectedError - jest isn't a global, and isn't recognized outside of tests
@@ -307,7 +321,7 @@ export function updateContainer(
       );
     }
   }
-
+  // 2. 设置fiber.updateQueue
   const update = createUpdate(eventTime, lane);
   // Caution: React DevTools currently depends on this property
   // being called "element".
@@ -328,6 +342,8 @@ export function updateContainer(
   }
 
   enqueueUpdate(current, update);
+  // 3. 进入reconciler运作流程中的`输入`环节
+  // scheduleUpdateOnFiber是输入阶段的入口函数
   scheduleUpdateOnFiber(current, lane, eventTime);
 
   return lane;

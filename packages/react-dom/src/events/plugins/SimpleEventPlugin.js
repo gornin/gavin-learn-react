@@ -194,6 +194,7 @@ function extractEvents(
       // This is a breaking change that can wait until React 18.
       domEventName === 'scroll';
 
+    // 遍历fiber树，提取事件的监听函数，存入listeners数组中
     const listeners = accumulateSinglePhaseListeners(
       targetInst,
       reactName,
@@ -202,6 +203,7 @@ function extractEvents(
       accumulateTargetOnly,
     );
     if (listeners.length > 0) {
+      // 创建合成事件，加入到派发队列
       // Intentionally create event lazily.
       const event = new SyntheticEventCtor(
         reactName,

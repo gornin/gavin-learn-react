@@ -96,20 +96,27 @@ export function createEventListenerWrapperWithPriority(
   domEventName: DOMEventName,
   eventSystemFlags: EventSystemFlags,
 ): Function {
+  // 1. 根据优先级设置 listenerWrapper
+  // 不同的domEventName调用getEventPriorityForPluginSystem后返回不同的优先级
   const eventPriority = getEventPriorityForPluginSystem(domEventName);
   let listenerWrapper;
+  // 这 3 种listener实际上都是对dispatchEvent的包装
   switch (eventPriority) {
     case DiscreteEvent:
+      // DiscreteEvent: 优先级最高, 包括click, keyDown, input等事件
       listenerWrapper = dispatchDiscreteEvent;
       break;
     case UserBlockingEvent:
+      // UserBlockingEvent: 优先级适中, 包括drag, scroll等事件
       listenerWrapper = dispatchUserBlockingUpdate;
       break;
     case ContinuousEvent:
     default:
+      // ContinuousEvent: 优先级最低,包括animation, load等事件
       listenerWrapper = dispatchEvent;
       break;
   }
+  // 2. 返回 listenerWrapper
   return listenerWrapper.bind(
     null,
     domEventName,
@@ -179,6 +186,16 @@ function dispatchUserBlockingUpdate(
   }
 }
 
+/**
+ * 当原生事件触发之后, 首先会进入到dispatchEvent这个回调函数.
+ * 而dispatchEvent函数是react事件体系中最关键的函数
+ *
+ * @param {*} domEventName
+ * @param {*} eventSystemFlags
+ * @param {*} targetContainer
+ * @param {*} nativeEvent
+ * @returns
+ */
 export function dispatchEvent(
   domEventName: DOMEventName,
   eventSystemFlags: EventSystemFlags,
@@ -215,7 +232,7 @@ export function dispatchEvent(
     );
     return;
   }
-
+  // 外界的原生事件与react内部的fiber节点相对应
   const blockedOn = attemptToDispatchEvent(
     domEventName,
     eventSystemFlags,
@@ -278,8 +295,9 @@ export function attemptToDispatchEvent(
   nativeEvent: AnyNativeEvent,
 ): null | Container | SuspenseInstance {
   // TODO: Warn if _enabled is false.
-
+  // 1. 定位原生DOM节点
   const nativeEventTarget = getEventTarget(nativeEvent);
+  // 2. 获取与DOM节点对应的fiber节点
   let targetInst = getClosestInstanceFromNode(nativeEventTarget);
 
   if (targetInst !== null) {
@@ -319,6 +337,7 @@ export function attemptToDispatchEvent(
       }
     }
   }
+  // 3. 通过插件系统, 派发事件
   dispatchEventForPluginEventSystem(
     domEventName,
     eventSystemFlags,
